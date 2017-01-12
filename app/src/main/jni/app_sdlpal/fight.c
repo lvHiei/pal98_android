@@ -3819,7 +3819,7 @@ PAL_BattlePlayerPerformAction(
 
       if (
       //RandomLong(0, str) >= RandomLong(0, def)
-      1
+      TRUE
        && !g_Battle.fIsBoss)
       {
          //
@@ -4827,17 +4827,18 @@ PAL_BattleStealFromEnemy(
    PAL_BattleUpdateFighters();
    PAL_BattleDelay(1, 0, TRUE);
 
-    wStealRate = 10;
-
    if (g_Battle.rgEnemy[wTarget].e.nStealItem > 0 &&
-      (RandomLong(0, 10) <= wStealRate || wStealRate == 0))
+    //  (RandomLong(0, 10) <= wStealRate
+        (TRUE
+       || wStealRate == 0))
    {
       if (g_Battle.rgEnemy[wTarget].e.wStealItem == 0)
       {
          //
          // stolen coins
          //
-         int c = g_Battle.rgEnemy[wTarget].e.nStealItem / RandomLong(2, 3);
+         //int c = g_Battle.rgEnemy[wTarget].e.nStealItem / RandomLong(2, 3);
+         int c = g_Battle.rgEnemy[wTarget].e.nStealItem / 1;
          g_Battle.rgEnemy[wTarget].e.nStealItem -= c;
          gpGlobals->dwCash += c;
 
