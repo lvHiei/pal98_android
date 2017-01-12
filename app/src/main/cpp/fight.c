@@ -3817,7 +3817,10 @@ PAL_BattlePlayerPerformAction(
          def = 0;
       }
 
-      if (RandomLong(0, str) >= RandomLong(0, def) && !g_Battle.fIsBoss)
+      if (
+      //RandomLong(0, str) >= RandomLong(0, def)
+      true
+       && !g_Battle.fIsBoss)
       {
          //
          // Successful escape
@@ -4823,6 +4826,8 @@ PAL_BattleStealFromEnemy(
    g_Battle.rgPlayer[iPlayerIndex].flTimeMeter = 0;
    PAL_BattleUpdateFighters();
    PAL_BattleDelay(1, 0, TRUE);
+
+    wStealRate = 10;
 
    if (g_Battle.rgEnemy[wTarget].e.nStealItem > 0 &&
       (RandomLong(0, 10) <= wStealRate || wStealRate == 0))

@@ -1,3 +1,6 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -11,5 +14,26 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+    }
+}
+
+
+def getSignKeyAlias() {
+    return "androiddebugkey"
+}
+
+def getSignKeyPassword() {
+    return "android"
+}
+
+def getSignStorePassword() {
+    return "android"
+}
+
+def getSignFile() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return file("sign\\debug.keystore")
+    } else {
+        return file("sign/debug.keystore")
     }
 }

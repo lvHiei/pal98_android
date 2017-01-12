@@ -3,6 +3,16 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        signDebug {
+            keyAlias getSignKeyAlias()
+            keyPassword getSignKeyPassword()
+            storeFile getSignFile()
+            storePassword getSignStorePassword()
+        }
+    }
+
+
     compileSdkVersion 18
     buildToolsVersion "25.0.0"
 
@@ -23,6 +33,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.signDebug
         }
     }
 }
