@@ -1,0 +1,46 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "25.0.0"
+
+    defaultConfig {
+        applicationId "com.codeplex.sdlpal"
+        minSdkVersion 4
+        targetSdkVersion 8
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+def getNdkDir() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty('ndk.dir', null)
+}
+
+task buildLib(type: Exec) {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        String ndkPath = getNdkDir() + "\\ndk-build.cmd"
+        commandLine ndkPath, "-C", "src\\main\\jni"
+    } else {
+        String ndkPath = getNdkDir() + "/ndk-build"
+        commandLine ndkPath, "-C", "src/main/jni"
+    }
+}
+
+buildLib.execute()

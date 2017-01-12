@@ -1,0 +1,12 @@
+build/
+app/build/
+.gradle/
+.idea/
+
+local.properties
+
+*.iml
+
+*.so
+*.o
+*.o.d
