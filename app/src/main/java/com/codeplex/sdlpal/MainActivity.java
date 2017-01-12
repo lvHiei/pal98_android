@@ -29,6 +29,10 @@ package com.codeplex.sdlpal;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -96,6 +100,9 @@ public class MainActivity extends Activity {
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 		
 		instance = this;
+
+		createSdlPalDir();
+		cpGameResource();
 
 		Settings.LoadGlobals(this);
 		
@@ -858,16 +865,117 @@ public class MainActivity extends Activity {
 		}
 		
 		Settings.LoadLocals(this);
-		
+
 		if(!Locals.AppLaunchConfigUse){
 			runApp();
 			return;
 		}
-		
+
+//		cpGameResource();
+
 		AppLaunchConfigView view = new AppLaunchConfigView(this);
 		setContentView(view);
 	}
-	
+
+
+	private void createSdlPalDir(){
+		String filename = getSdlPalDir();
+		File file = new File(filename);
+		if(file.exists() && file.isDirectory()){
+			return;
+		}
+
+		file.mkdir();
+	}
+
+	private String getSdlPalDir(){
+		String filename = Environment.getExternalStorageDirectory() + "/sdlpal/";
+		return filename;
+	}
+
+	private void cpGameResource(){
+		String[] gameResources = {
+				"0.RPG",
+
+				"ABC.MKF",
+				"BALL.MKF",
+				"DATA.MKF",
+				"F.MKF",
+				"FBP.MKF",
+				"FIRE.MKF",
+				"GOP.MKF",
+				"MAP.MKF",
+				"MGO.MKF",
+				"MIDI.MKF",
+				"MUS.MKF",
+				"PAT.MKF",
+				"RGM.MKF",
+				"RNG.MKF",
+				"SSS.MKF",
+				"VOC.MKF",
+
+				"M.MSG",
+
+				"WOR16.ASC",
+				"WOR16.FON",
+				"WORD.DAT",
+
+				"desc.dat",
+				"faq.txt",
+				"gl.txt",
+		};
+
+		for(int i = 0; i < gameResources.length; ++i){
+			String asset = gameResources[i];
+//			String file = Globals.CurrentDirectoryPath + "/" + asset;
+			String file = getSdlPalDir()  + asset;
+			copyAssetsToSD(asset, file);
+		}
+
+	}
+	private void copyAssetsToSD(String assetName, String sdFile)
+	{
+		File file = new File(sdFile);
+		if (file.exists()){
+			return ;
+		}
+
+		InputStream myInput = null;
+		OutputStream myOutput = null;
+		try {
+			myOutput = new FileOutputStream(sdFile);
+			myInput = this.getAssets().open(assetName);
+
+			byte[] buffer = new byte[1024];
+			int length = myInput.read(buffer);
+			while(length > 0)
+			{
+				myOutput.write(buffer, 0, length);
+				length = myInput.read(buffer);
+			}
+
+			myOutput.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (null != myInput){
+					myInput.close();
+				}
+
+				if (null != myOutput){
+					myOutput.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+
 	//
 	
 	private boolean checkAppNeedFiles()
