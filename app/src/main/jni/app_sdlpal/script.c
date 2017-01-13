@@ -26,6 +26,8 @@
 BOOL            g_fScriptSuccess = TRUE;
 static int      g_iCurEquipPart = -1;
 
+static int      g_isLinghuzhouMagic = FALSE;
+
 static BOOL
 PAL_NPCWalkTo(
    WORD           wEventObjectID,
@@ -2968,6 +2970,36 @@ PAL_InterpretInstruction(
    return wScriptEntry + 1;
 }
 
+
+WORD
+PAL_RunLHZTriggerScript(
+   WORD           wScriptEntry,
+   WORD           wEventObjectID
+)
+/*++
+  Purpose:
+
+    Runs a ling hu zhou script.
+
+  Parameters:
+
+    [IN]  wScriptEntry - The script entry to execute.
+
+    [IN]  wEventObjectID - The event object ID which invoked the script.
+
+  Return value:
+
+    The entry point of the script.
+
+--*/
+{
+    g_isLinghuzhouMagic = TRUE;
+    WORD ret = PAL_RunTriggerScript(wScriptEntry, wEventObjectID);
+    g_isLinghuzhouMagic = FALSE;
+    return ret;
+}
+
+
 WORD
 PAL_RunTriggerScript(
    WORD           wScriptEntry,
@@ -3136,11 +3168,16 @@ PAL_RunTriggerScript(
          //
          // Jump to the specified address by the specified rate
          //
-         //if (RandomLong(1, 100) >= pScript->rgwOperand[0])
-         if (FALSE)
+         if(!g_isLinghuzhouMagic)
          {
-            wScriptEntry = pScript->rgwOperand[1];
-            continue;
+             if (RandomLong(1, 100) >= pScript->rgwOperand[0])
+             {
+                wScriptEntry = pScript->rgwOperand[1];
+                continue;
+             }else
+             {
+                wScriptEntry++;
+             }
          }
          else
          {
@@ -3392,11 +3429,16 @@ begin:
       //
       // jump to the specified address by the specified rate
       //
-      //if (RandomLong(1, 100) >= pScript->rgwOperand[0] && pScript->rgwOperand[1] != 0)
-      if (FALSE && pScript->rgwOperand[1] != 0)
+      if(!g_isLinghuzhouMagic)
       {
-         wScriptEntry = pScript->rgwOperand[1];
-         goto begin;
+          if (RandomLong(1, 100) >= pScript->rgwOperand[0] && pScript->rgwOperand[1] != 0)
+          {
+             wScriptEntry = pScript->rgwOperand[1];
+             goto begin;
+          }else
+          {
+             wScriptEntry++;
+          }
       }
       else
       {

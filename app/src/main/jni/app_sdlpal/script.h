@@ -33,6 +33,12 @@ PAL_RunTriggerScript(
 );
 
 WORD
+PAL_RunLHZTriggerScript(
+   WORD           wScriptEntry,
+   WORD           wEventObjectID
+);
+
+WORD
 PAL_RunAutoScript(
    WORD           wScriptEntry,
    WORD           wEventObjectID

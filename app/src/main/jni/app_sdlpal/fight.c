@@ -3935,8 +3935,15 @@ PAL_BattlePlayerPerformAction(
                PAL_BattleShowPlayerOffMagicAnim(wPlayerIndex, wObject, sTarget);
             }
 
-            gpGlobals->g.rgObject[wObject].magic.wScriptOnSuccess =
-               PAL_RunTriggerScript(gpGlobals->g.rgObject[wObject].magic.wScriptOnSuccess, (WORD)sTarget);
+            // magic linghuzhou
+            if(wMagicNum == 84){
+                gpGlobals->g.rgObject[wObject].magic.wScriptOnSuccess =
+                   PAL_RunLHZTriggerScript(gpGlobals->g.rgObject[wObject].magic.wScriptOnSuccess, (WORD)sTarget);
+            }
+            else{
+                gpGlobals->g.rgObject[wObject].magic.wScriptOnSuccess =
+                    PAL_RunTriggerScript(gpGlobals->g.rgObject[wObject].magic.wScriptOnSuccess, (WORD)sTarget);
+            }
 
             //
             // Inflict damage to enemies
