@@ -3031,6 +3031,10 @@ PAL_RunTriggerScript(
          pScript->wOperation, pScript->rgwOperand[0], pScript->rgwOperand[1],
          pScript->rgwOperand[2], pScript->rgwOperand[3]);
 
+      LOGE("[SCRIPT] %.4x: %.4x %.4x %.4x %.4x\n", wScriptEntry,
+         pScript->wOperation, pScript->rgwOperand[0], pScript->rgwOperand[1],
+         pScript->rgwOperand[2], pScript->rgwOperand[3]);
+
       switch (pScript->wOperation)
       {
       case 0x0000:
@@ -3132,7 +3136,8 @@ PAL_RunTriggerScript(
          //
          // Jump to the specified address by the specified rate
          //
-         if (RandomLong(1, 100) >= pScript->rgwOperand[0])
+         //if (RandomLong(1, 100) >= pScript->rgwOperand[0])
+         if (FALSE)
          {
             wScriptEntry = pScript->rgwOperand[1];
             continue;
@@ -3388,7 +3393,7 @@ begin:
       // jump to the specified address by the specified rate
       //
       //if (RandomLong(1, 100) >= pScript->rgwOperand[0] && pScript->rgwOperand[1] != 0)
-      if (TRUE && pScript->rgwOperand[1] != 0)
+      if (FALSE && pScript->rgwOperand[1] != 0)
       {
          wScriptEntry = pScript->rgwOperand[1];
          goto begin;
