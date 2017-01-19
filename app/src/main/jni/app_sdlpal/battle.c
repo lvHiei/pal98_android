@@ -379,6 +379,9 @@ PAL_BattleMain(
 
    PAL_ClearKeyState();
 
+   extern BOOL g_hasInGame;
+   g_hasInGame = FALSE;
+
    //
    // Run the main battle loop.
    //
@@ -1147,6 +1150,9 @@ PAL_StartBattle(
    WORD           w, wPrevWaveLevel;
    SHORT          sPrevWaveProgression;
 
+   extern BOOL g_hasInGame;
+   g_hasInGame = FALSE;
+
    //
    // Set the screen waving effects
    //
@@ -1395,6 +1401,8 @@ PAL_StartBattle(
 #ifdef PAL_ALLOW_KEYREPEAT
    SDL_EnableKeyRepeat(120, 75);
 #endif
+
+   g_hasInGame = FALSE;
 
    //
    // Run the main battle routine.

@@ -3032,6 +3032,9 @@ PAL_RunTriggerScript(
 
    extern BOOL       g_fUpdatedInBattle; // HACKHACK
 
+   extern BOOL g_hasInGame;
+   g_hasInGame = FALSE;
+
    wNextScriptEntry = wScriptEntry;
    fEnded = FALSE;
    g_fUpdatedInBattle = FALSE;

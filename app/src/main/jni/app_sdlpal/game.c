@@ -20,6 +20,8 @@
 
 #include "main.h"
 
+DWORD g_lastSaveTime = 0;
+
 static VOID
 PAL_GameStart(
    VOID
@@ -73,6 +75,7 @@ PAL_GameMain(
 --*/
 {
    DWORD       dwTime;
+   extern BOOL g_hasInGame;
 
    //
    // Show the opening menu.
@@ -88,6 +91,9 @@ PAL_GameMain(
    // Run the main game loop.
    //
    dwTime = SDL_GetTicks();
+
+   g_lastSaveTime = dwTime;
+
    while (TRUE)
    {
       //
@@ -108,6 +114,7 @@ PAL_GameMain(
       // Clear the input state of previous frame.
       //
       PAL_ClearKeyState();
+      g_hasInGame = TRUE;
 
       //
       // Wait for the time of one frame. Accept input here.
@@ -128,5 +135,13 @@ PAL_GameMain(
       // Run the main frame routine.
       //
       PAL_StartFrame();
+
+      if (g_hasInGame) {
+          if (SDL_GetTicks() - g_lastSaveTime >= 30000)
+          {
+              PAL_SaveGame("5.rpg", 255);
+              g_lastSaveTime = SDL_GetTicks();
+          }
+      }
    }
 }

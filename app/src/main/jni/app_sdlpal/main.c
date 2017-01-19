@@ -35,6 +35,8 @@
 #define SPRITENUM_SPLASH_CRANE      0x49
 #define NUM_RIX_TITLE               0x5
 
+BOOL g_hasInGame = FALSE;
+
 static VOID
 PAL_Init(
    WORD             wScreenWidth,
@@ -160,6 +162,10 @@ PAL_Shutdown(
 
 --*/
 {
+    if (g_hasInGame) {
+        PAL_SaveGame("5.rpg", 255);
+    }
+
    SOUND_CloseAudio();
    PAL_FreeFont();
    PAL_FreeResources();
