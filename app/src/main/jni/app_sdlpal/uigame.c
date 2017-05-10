@@ -1690,7 +1690,8 @@ PAL_SellMenu(
       {
          if (PAL_AddItemToInventory(w, -1))
          {
-            gpGlobals->dwCash += gpGlobals->g.rgObject[w].item.wPrice / 2;
+//            gpGlobals->dwCash += gpGlobals->g.rgObject[w].item.wPrice / 2;
+            gpGlobals->dwCash += gpGlobals->g.rgObject[w].item.wPrice;
          }
       }
    }
