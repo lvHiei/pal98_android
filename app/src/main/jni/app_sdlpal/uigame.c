@@ -1652,7 +1652,8 @@ PAL_SellMenu_OnItemChange(
    if (gpGlobals->g.rgObject[wCurrentItem].item.wFlags & kItemFlagSellable)
    {
       PAL_DrawText(PAL_GetWord(SELLMENU_LABEL_PRICE), PAL_XY(230, 160), 0, FALSE, FALSE);
-      PAL_DrawNumber(gpGlobals->g.rgObject[wCurrentItem].item.wPrice / 2, 6,
+//      PAL_DrawNumber(gpGlobals->g.rgObject[wCurrentItem].item.wPrice / 2, 6,
+      PAL_DrawNumber(gpGlobals->g.rgObject[wCurrentItem].item.wPrice, 6,
          PAL_XY(269, 164), kNumColorYellow, kNumAlignRight);
    }
 }
