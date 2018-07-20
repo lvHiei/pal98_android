@@ -2,7 +2,7 @@ build/
 app/build/
 .gradle/
 .idea/
-
+.externalNativeBuild
 local.properties
 
 *.iml
