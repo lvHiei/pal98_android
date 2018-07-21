@@ -795,8 +795,15 @@ public class MainView extends AbsoluteLayout
 		 */
 
 		Display disp = ((WindowManager)mActivity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		mDisplayWidth  = disp.getWidth();
-		mDisplayHeight = disp.getHeight();
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && (
+				orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+				|| orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE)){
+			mDisplayWidth = disp.getHeight();
+			mDisplayHeight = disp.getWidth();
+		}else{
+			mDisplayWidth  = disp.getWidth();
+			mDisplayHeight = disp.getHeight();
+		}
 	}
 	
 	public int getDisplayWidth()
